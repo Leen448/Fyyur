@@ -1,7 +1,7 @@
 #----------------------------------------------------------------------------#
 # Imports
 #----------------------------------------------------------------------------#
-
+import os
 import json
 import dateutil.parser
 import babel
@@ -28,14 +28,14 @@ from models import app, db, Venue, Artist, Show
 # App Config.
 #----------------------------------------------------------------------------#
 
-app = Flask(__name__)
+# app = Flask(__name__)
 moment = Moment(app)
-app.config.from_object('config')
+# app.config.from_object('config')
 
 
 # TODO: connect to a local postgresql database
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
+# db = SQLAlchemy(app)
+# migrate = Migrate(app, db)
 
 
 #----------------------------------------------------------------------------#
@@ -76,11 +76,9 @@ def venues():
     locals.append({
       'city': place.city,
       'state': place.state,
-      'venues': [{
-          'id': venue.id,
-          'name': venue.name,
-      } for venue in venues if
-         venue.city == place.city and venue.state == place.state]
+      'venues': [
+        {'id': venue.id, 'name': venue.name,} for venue in venues if venue.city == place.city and venue.state == place.state
+        ]
     })
   return render_template('pages/venues.html', areas=locals)
 
@@ -561,12 +559,11 @@ if not app.debug:
 #----------------------------------------------------------------------------#
 
 # Default port:
-if __name__ == '__main__':
-    app.run()
+# if __name__ == '__main__':
+#     app.run()
 
 # Or specify port manually:
-'''
+
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port)
-'''
+    app.run(host='127.0.0.1', port=port)

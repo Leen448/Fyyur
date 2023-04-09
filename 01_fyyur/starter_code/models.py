@@ -4,7 +4,8 @@ from flask_migrate import Migrate
 import datetime
 
 app = Flask(__name__)
-db = SQLAlchemy()
+app.config.from_object('config')
+db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 class Venue(db.Model):
